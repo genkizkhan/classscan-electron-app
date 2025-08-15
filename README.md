@@ -127,5 +127,27 @@ Please follow the existing code style, write tests for new functionality, and up
 
 ---
 
+## CI/CD
+
+This project uses GitHub Actions for continuous integration. The following checks run on every push and pull request to the `main` branch:
+
+1. **Linting**: Ensures code follows the project's ESLint rules
+2. **Formatting**: Verifies code is properly formatted with Prettier
+3. **Tests**: Runs the test suite
+
+The workflow file is located at `.github/workflows/ci.yml`.
+
+### Required Repository Secrets
+
+Make sure to set up the following repository secrets in your GitHub repository settings:
+
+1. `NPM_TOKEN` (optional): Required if you need to install private npm packages
+
+### Manual Triggers
+
+You can manually trigger the workflow from the GitHub Actions tab in your repository.
+
+---
+
 ## 📄 License
 This project is released under the MIT License. See LICENSE for details.
