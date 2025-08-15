@@ -129,13 +129,32 @@ Please follow the existing code style, write tests for new functionality, and up
 
 ## CI/CD
 
-This project uses GitHub Actions for continuous integration. The following checks run on every push and pull request to the `main` branch:
+This project uses GitHub Actions for continuous integration and deployment. The workflow includes two main jobs:
 
-1. **Linting**: Ensures code follows the project's ESLint rules
-2. **Formatting**: Verifies code is properly formatted with Prettier
-3. **Tests**: Runs the test suite
+### 1. Lint and Test
+- Runs on every push and pull request to the `main` branch
+- Checks code formatting with Prettier
+- Runs ESLint to enforce code style
+- Executes all tests
 
-The workflow file is located at `.github/workflows/ci.yml`.
+### 2. Build and Package (Main Branch Only)
+- Runs only on the `main` branch after successful linting and testing
+- Builds the React application
+- Packages the Electron app for all platforms
+- Uploads build artifacts for download
+
+### Workflow Triggers
+- Automatic triggers:
+  - Push to `main` branch
+  - Pull requests targeting `main`
+- Manual trigger: Available in the GitHub Actions tab
+
+### Artifacts
+When the build completes successfully, the following artifacts are available for download:
+- macOS: `.dmg` installer
+- Windows: `.exe` installer
+- Linux: `.AppImage`
+- Update metadata files
 
 ### Required Repository Secrets
 

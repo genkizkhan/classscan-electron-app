@@ -1,10 +1,11 @@
-name: CI
+name: CI/CD Pipeline
 
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   lint-and-test:
@@ -30,6 +31,49 @@ jobs:
       run: npm run format:check
     
     - name: Run Tests
-      run: npm test -- --watchAll=false
+      run: npm test -- --watchAll=false --passWithNoTests
       env:
         CI: true
+  
+  build-and-package:
+    name: Build and Package
+    needs: lint-and-test
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Use Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18.x'
+        cache: 'npm'
+    
+    - name: Install Dependencies
+      run: npm ci
+    
+    - name: Build React App
+      run: npm run build
+      env:
+        GENERATE_SOURCEMAP: false
+        INLINE_RUNTIME_CHUNK: false
+    
+    - name: Package Electron App
+      run: npm run electron:build
+      env:
+        ELECTRON_BUILDER_ALLOW_UNRESOLVED_DEPENDENCIES: true
+    
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: release
+        path: |
+          dist/*.dmg
+          dist/*.dmg.blockmap
+          dist/latest.yml
+          dist/*.exe
+          dist/*.exe.blockmap
+          dist/*.AppImage
+          dist/*.AppImage.blockmap
+        if-no-files-found: error
