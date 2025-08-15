@@ -7,7 +7,7 @@ function App() {
         alignItems: 'center',
         justifyContent: 'center',
         fontSize: '2rem',
-        fontFamily: 'sans-serif'
+        fontFamily: 'sans-serif',
       }}
     >
       Hello World
@@ -16,4 +16,3 @@ function App() {
 }
 
 export default App;
-

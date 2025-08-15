@@ -1,0 +1,10 @@
+node_modules/
+build/
+dist/
+coverage/
+*.config.js
+*.test.js
+*.spec.js
+.electron-builder.env
+.electron-vue
+.DS_Store

@@ -1,0 +1,16 @@
+node_modules/
+build/
+dist/
+coverage/
+*.md
+*.html
+*.json
+*.lock
+yarn.lock
+package-lock.json
+.DS_Store
+.gitignore
+.eslintignore
+.prettierignore
+.vscode/
+.idea/
